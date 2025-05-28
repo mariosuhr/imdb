@@ -1,9 +1,16 @@
 import pandas as pd
+pd.options.display.float_format = '{:,.0f}'.format
+
+colunas = ['tconst', 'titleType', 'primaryTitle', 'originalTitle', 'startYear','runtimeMinutes', 'genres', 'averageRating', 'numVotes','directorsName', 'writersName']
 
 df = pd.read_csv('imdb.csv')
 
-# Buscar todos os filmes do Batman
-hp_movies = df[df['originalTitle'].str.contains("the hobbit", case=False, na=False)]
 
-# Mostrar apenas as colunas relevantes
-print(hp_movies)
+mediaVotosDiretores = df.groupby('directorsName')['numVotes'].mean().reset_index()
+mediaVotosDiretores = mediaVotosDiretores.sort_values(by='numVotes', ascending=False)
+
+
+
+
+print(mediaVotosDiretores.head(20))
+
